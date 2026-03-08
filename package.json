@@ -1,0 +1,39 @@
+{
+  "name": "moltalyzer-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for Moltalyzer — crypto intelligence, GitHub trends, and prediction market signals via x402 micropayments",
+  "type": "module",
+  "bin": {
+    "moltalyzer-mcp": "./build/index.js"
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc && chmod +x build/index.js",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "moltalyzer",
+    "crypto",
+    "x402",
+    "ai",
+    "claude",
+    "chatgpt",
+    "cursor"
+  ],
+  "author": "jcislo",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.0",
+    "@x402/fetch": "^2.5.0",
+    "@x402/evm": "^2.4.0",
+    "viem": "^2.0.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "@types/node": "^20.0.0"
+  }
+}
