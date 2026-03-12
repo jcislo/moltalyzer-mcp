@@ -1,0 +1,29 @@
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required:
+      - evmPrivateKey
+    properties:
+      evmPrivateKey:
+        type: string
+        description: >-
+          EVM wallet private key (0x-prefixed hex) with USDC on Base Mainnet.
+          Used for x402 micropayments ($0.005–$0.05 per tool call).
+          Get USDC on Base at https://coinbase.com or bridge from other chains.
+      moltalyzerApiUrl:
+        type: string
+        description: "Override Moltalyzer API base URL (default: https://api.moltalyzer.xyz)"
+        default: "https://api.moltalyzer.xyz"
+  commandFunction: |-
+    (config) => ({
+      command: "npx",
+      args: ["-y", "moltalyzer-mcp@latest"],
+      env: {
+        EVM_PRIVATE_KEY: config.evmPrivateKey,
+        ...(config.moltalyzerApiUrl ? { MOLTALYZER_API_URL: config.moltalyzerApiUrl } : {})
+      }
+    })
+  exampleConfig:
+    evmPrivateKey: "0xabc123..."
+    moltalyzerApiUrl: "https://api.moltalyzer.xyz"
