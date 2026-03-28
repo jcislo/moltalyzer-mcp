@@ -1,0 +1,38 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.jcislo/moltalyzer-mcp",
+  "description": "Token signals, Polymarket markets, GitHub trends via x402 micropayments. Free samples.",
+  "repository": {
+    "url": "https://github.com/jcislo/moltalyzer-mcp",
+    "source": "github"
+  },
+  "version_detail": {
+    "version": "1.1.1"
+  },
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "moltalyzer-mcp",
+      "version": "1.1.1",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "EVM_PRIVATE_KEY",
+          "description": "EVM wallet private key (0x-prefixed) with USDC on Base Mainnet. Used for x402 micropayments ($0.005–$0.05 per tool call). Free sample tools require no key.",
+          "isRequired": false,
+          "format": "string",
+          "isSecret": true
+        },
+        {
+          "name": "MOLTALYZER_API_URL",
+          "description": "Override the Moltalyzer API base URL (default: https://api.moltalyzer.xyz)",
+          "isRequired": false,
+          "format": "string",
+          "isSecret": false
+        }
+      ]
+    }
+  ]
+}
