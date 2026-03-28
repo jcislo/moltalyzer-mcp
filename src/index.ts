@@ -10,6 +10,8 @@ import { register as registerMoltbook } from "./tools/moltbook.js";
 import { register as registerGithub } from "./tools/github.js";
 import { register as registerPolymarket } from "./tools/polymarket.js";
 import { register as registerTokens } from "./tools/tokens.js";
+import { register as registerIntelligence } from "./tools/intelligence.js";
+import { register as registerFree } from "./tools/free.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const pkg = JSON.parse(readFileSync(join(__dirname, "..", "package.json"), "utf-8"));
@@ -17,47 +19,49 @@ const pkg = JSON.parse(readFileSync(join(__dirname, "..", "package.json"), "utf-
 // All logging to stderr (stdout reserved for MCP protocol)
 const log = (...args: unknown[]) => console.error("[moltalyzer-mcp]", ...args);
 
-// Validate env before starting
-if (!process.env.EVM_PRIVATE_KEY) {
-  log(
-    "ERROR: EVM_PRIVATE_KEY environment variable is required.\n" +
-      "Set it to your wallet private key (0x-prefixed hex string) " +
-      "with USDC on Base Mainnet for x402 micropayments.\n\n" +
-      "Example MCP config:\n" +
-      JSON.stringify(
-        {
-          mcpServers: {
-            moltalyzer: {
-              command: "npx",
-              args: ["-y", "moltalyzer-mcp"],
-              env: { EVM_PRIVATE_KEY: "0x..." },
-            },
-          },
-        },
-        null,
-        2,
-      ),
-  );
-  process.exit(1);
-}
-
 async function main() {
-  const fetchWithPayment = createFetchWithPayment();
-
   const server = new McpServer({
     name: "moltalyzer-mcp",
     version: pkg.version,
   });
 
-  // Register all tool modules
-  registerMoltbook(server, fetchWithPayment);
-  registerGithub(server, fetchWithPayment);
-  registerPolymarket(server, fetchWithPayment);
-  registerTokens(server, fetchWithPayment);
+  // Free tools always available — no wallet or API key needed
+  registerFree(server);
+
+  const hasWallet = !!process.env.EVM_PRIVATE_KEY;
+
+  if (hasWallet) {
+    const fetchWithPayment = createFetchWithPayment();
+    registerMoltbook(server, fetchWithPayment);
+    registerGithub(server, fetchWithPayment);
+    registerPolymarket(server, fetchWithPayment);
+    registerTokens(server, fetchWithPayment);
+    registerIntelligence(server, fetchWithPayment);
+    log(`Server started with 16 tools (4 free + 12 paid via x402)`);
+  } else {
+    log(
+      "WARNING: EVM_PRIVATE_KEY not set — running in free-tier mode (4 tools).\n" +
+        "To unlock all 16 tools with x402 micropayments, add your wallet private key:\n\n" +
+        JSON.stringify(
+          {
+            mcpServers: {
+              moltalyzer: {
+                command: "npx",
+                args: ["-y", "moltalyzer-mcp"],
+                env: { EVM_PRIVATE_KEY: "0x..." },
+              },
+            },
+          },
+          null,
+          2,
+        ) +
+        "\n\nAlternatively, get a free API key at https://moltalyzer.xyz for 5 digests/day.",
+    );
+    log("Server started with 4 free tools");
+  }
 
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  log("Server started with 10 tools");
 }
 
 main().catch((err) => {

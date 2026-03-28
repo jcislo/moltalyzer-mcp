@@ -2,8 +2,6 @@ startCommand:
   type: stdio
   configSchema:
     type: object
-    required:
-      - evmPrivateKey
     properties:
       evmPrivateKey:
         type: string
@@ -20,10 +18,10 @@ startCommand:
       command: "npx",
       args: ["-y", "moltalyzer-mcp@latest"],
       env: {
-        EVM_PRIVATE_KEY: config.evmPrivateKey,
+        ...(config.evmPrivateKey ? { EVM_PRIVATE_KEY: config.evmPrivateKey } : {}),
         ...(config.moltalyzerApiUrl ? { MOLTALYZER_API_URL: config.moltalyzerApiUrl } : {})
       }
     })
   exampleConfig:
-    evmPrivateKey: "0xabc123..."
+    evmPrivateKey: "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
     moltalyzerApiUrl: "https://api.moltalyzer.xyz"
