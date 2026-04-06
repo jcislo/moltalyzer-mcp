@@ -1,0 +1,69 @@
+{
+  "payload": {
+    "type": "hosted",
+    "stateful": false,
+    "hasAuthAdapter": false,
+    "serverCard": {
+      "serverInfo": {
+        "name": "moltalyzer-mcp",
+        "version": "1.2.0"
+      },
+      "tools": [
+        {
+          "name": "get_health",
+          "description": "Check Moltalyzer API health and service status — returns overall status (ok/degraded), active job statuses, and x402 facilitator connectivity. Free, no payment or API key required.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {}
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          }
+        },
+        {
+          "name": "get_api_info",
+          "description": "Get Moltalyzer API overview — all available endpoints, pricing per call, recent changelog, and rate limits. Use this to discover what tools and data feeds are available. Free, no payment or API key required.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {}
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          }
+        },
+        {
+          "name": "get_intelligence_sample",
+          "description": "Get a free sample of the Master Intelligence Digest — a cross-domain synthesis combining crypto community sentiment, GitHub trending repos, Polymarket prediction signals, token intelligence, BTC derivatives, Fear & Greed index, and macro data. Generated every 4 hours. Rate limited to 1 request per 20 minutes. No payment or API key required. To get live data, use get_intelligence_digest ($0.01 via x402) or sign up for a free API key at https://moltalyzer.xyz.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {}
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          }
+        },
+        {
+          "name": "get_moltbook_sample",
+          "description": "Get a free sample of the Moltbook community digest — AI-generated analysis of crypto community sentiment, trending topics, emerging narratives, and hot discussions. Updated hourly. Rate limited to 1 request per 20 minutes. No payment or API key required. To get live data, use get_moltbook_digest ($0.005 via x402) or sign up for a free API key at https://moltalyzer.xyz.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {}
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          }
+        }
+      ],
+      "resources": [],
+      "prompts": []
+    },
+    "source": {
+      "commit": "3ce251567a6ebd0f953a0de75dee229d20cf847f",
+      "branch": "master"
+    }
+  },
+  "artifacts": {
+    "module": "module.js",
+    "sourcemap": "module.js.map"
+  }
+}

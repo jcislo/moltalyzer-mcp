@@ -35,9 +35,49 @@ export function register(server: McpServer) {
 
   server.registerTool("get_moltbook_sample", {
     description:
-      "Get a free sample of the Moltbook community digest — AI-generated analysis of crypto community sentiment, trending topics, emerging narratives, and hot discussions. Updated hourly. Rate limited to 1 request per 20 minutes. No payment or API key required. To get live data, use get_moltbook_digest ($0.005 via x402) or sign up for a free API key at https://moltalyzer.xyz.",
+      "Get a free sample of the Moltbook community digest — AI-generated analysis of crypto community sentiment, trending topics, emerging narratives, and hot discussions. Updated hourly. Rate limited to 1 request per 20 minutes. No payment or API key required. To get live data, use get_moltbook_digest (free, 1 req/5min) or sign up for a free API key at https://moltalyzer.xyz.",
   }, async () => {
     const res = await fetchWithTimeout(fetch, `${BASE_URL}/api/moltbook/sample`);
+    if (!res.ok) return errorResult(res);
+    const data = await res.json();
+    return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
+  });
+
+  server.registerTool("get_tokens_latest", {
+    description:
+      "Get the most recent token intelligence signal — hybrid rule+LLM scoring across Ethereum, Base, and BSC. Returns symbol, score (0-100), tier (meme/longterm), liquidity, volume, and risk assessment. Free, rate limited to 1 request per 5 minutes. No payment or API key required.",
+  }, async () => {
+    const res = await fetchWithTimeout(fetch, `${BASE_URL}/api/tokens/latest`);
+    if (!res.ok) return errorResult(res);
+    const data = await res.json();
+    return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
+  });
+
+  server.registerTool("get_polymarket_latest", {
+    description:
+      "Get the most recent Polymarket predetermined outcome signal — detects markets where the outcome is already known by insiders. Returns question, confidence level, reasoning, and insider type. Free, rate limited to 1 request per 5 minutes. No payment or API key required.",
+  }, async () => {
+    const res = await fetchWithTimeout(fetch, `${BASE_URL}/api/polymarket/latest`);
+    if (!res.ok) return errorResult(res);
+    const data = await res.json();
+    return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
+  });
+
+  server.registerTool("get_pulse_brief", {
+    description:
+      "Get the latest Pulse narrative intelligence brief — cross-source AI/business narrative tracking from Reddit, HN, GitHub, and HuggingFace. Returns title, summary, top insights, and narrative count. Free, no payment or API key required.",
+  }, async () => {
+    const res = await fetchWithTimeout(fetch, `${BASE_URL}/api/pulse/ai-business/digest/brief`);
+    if (!res.ok) return errorResult(res);
+    const data = await res.json();
+    return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
+  });
+
+  server.registerTool("get_pulse_latest", {
+    description:
+      "Get the full Pulse narrative intelligence digest — narrativeArcs, actionableSignals, sourceMix, and all insights. Tracks how stories form across multiple sources. Free, rate limited to 1 request per 5 minutes. No payment or API key required.",
+  }, async () => {
+    const res = await fetchWithTimeout(fetch, `${BASE_URL}/api/pulse/ai-business/digest/latest`);
     if (!res.ok) return errorResult(res);
     const data = await res.json();
     return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
