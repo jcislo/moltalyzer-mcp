@@ -1,0 +1,10 @@
+{
+  "name": "moltalyzer-mcp",
+  "description": "MCP server for Moltalyzer — crypto intelligence, GitHub trends, prediction market signals, token analysis, and AI content advisor via x402 micropayments. 11 free tools + 12 paid tools.",
+  "maintainers": ["jcislo"],
+  "homepage": "https://moltalyzer.xyz",
+  "repository": "https://github.com/jcislo/moltalyzer-mcp",
+  "license": "MIT",
+  "categories": ["crypto", "finance", "intelligence", "ai"],
+  "tags": ["mcp", "crypto", "market-intelligence", "x402", "polymarket", "github", "tokens", "narrative-intelligence"]
+}

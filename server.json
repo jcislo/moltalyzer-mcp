@@ -6,15 +6,15 @@
     "url": "https://github.com/jcislo/moltalyzer-mcp",
     "source": "github"
   },
-  "version": "1.2.0",
+  "version": "1.4.0",
   "version_detail": {
-    "version": "1.2.0"
+    "version": "1.4.0"
   },
   "packages": [
     {
       "registryType": "npm",
       "identifier": "moltalyzer-mcp",
-      "version": "1.2.0",
+      "version": "1.4.0",
       "transport": {
         "type": "stdio"
       },

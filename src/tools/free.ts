@@ -82,4 +82,34 @@ export function register(server: McpServer) {
     const data = await res.json();
     return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
   });
+
+  server.registerTool("get_moltbook_digest", {
+    description:
+      "Get the latest hourly Moltbook community digest — AI-generated analysis of crypto community sentiment, trending topics, emerging narratives, and hot discussions from the past hour. Returns title, summary, full markdown analysis, sentiment scores, and narrative tracking. Free, rate limited to 1 request per 5 minutes. No payment or API key required.",
+  }, async () => {
+    const res = await fetchWithTimeout(fetch, `${BASE_URL}/api/moltbook/digests/latest`);
+    if (!res.ok) return errorResult(res);
+    const data = await res.json();
+    return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
+  });
+
+  server.registerTool("get_github_digest", {
+    description:
+      "Get the latest daily GitHub trending repos digest — AI analysis of newly created repositories gaining traction, organized by category with emerging tools, language trends, and notable projects. Runs daily at 06:00 UTC scanning repos created in the last 24 hours. Free, rate limited to 1 request per 5 minutes. No payment or API key required.",
+  }, async () => {
+    const res = await fetchWithTimeout(fetch, `${BASE_URL}/api/github/digests/latest`);
+    if (!res.ok) return errorResult(res);
+    const data = await res.json();
+    return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
+  });
+
+  server.registerTool("get_intelligence_digest", {
+    description:
+      "Get the latest Master Intelligence Digest — a cross-domain synthesis combining crypto community sentiment, GitHub trends, Polymarket signals, and token intelligence into a unified analysis with executive summary, cross-domain insights, narratives, and sentiment. Updated every hour. Free, rate limited to 1 request per 5 minutes. No payment or API key required.",
+  }, async () => {
+    const res = await fetchWithTimeout(fetch, `${BASE_URL}/api/intelligence/latest`);
+    if (!res.ok) return errorResult(res);
+    const data = await res.json();
+    return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
+  });
 }

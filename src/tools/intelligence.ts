@@ -4,16 +4,6 @@ import { BASE_URL, fetchWithTimeout } from "../client.js";
 import { errorResult } from "./error.js";
 
 export function register(server: McpServer, fetchFn: typeof fetch) {
-  server.registerTool("get_intelligence_digest", {
-    description:
-      "Get the latest Master Intelligence Digest — a cross-domain synthesis combining crypto community sentiment, GitHub trends, Polymarket signals, and token intelligence into a unified analysis with executive summary, cross-domain insights, narratives, and sentiment. Updated every hour. Costs $0.01 USDC via x402.",
-  }, async () => {
-    const res = await fetchWithTimeout(fetchFn, `${BASE_URL}/api/intelligence/latest`);
-    if (!res.ok) return errorResult(res);
-    const data = await res.json();
-    return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
-  });
-
   server.registerTool("get_intelligence_history", {
     description:
       "Get historical Master Intelligence Digests — cross-domain synthesis over a configurable lookback window (1-168 hours). Track how the unified intelligence picture evolves over time. Costs $0.03 USDC via x402.",

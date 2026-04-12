@@ -4,16 +4,6 @@ import { BASE_URL, fetchWithTimeout } from "../client.js";
 import { errorResult } from "./error.js";
 
 export function register(server: McpServer, fetchFn: typeof fetch) {
-  server.registerTool("get_github_digest", {
-    description:
-      "Get the latest daily GitHub trending repos digest — AI analysis of newly created repositories gaining traction, organized by category with emerging tools, language trends, and notable projects. Runs daily at 06:00 UTC scanning repos created in the last 24 hours. Costs $0.02 USDC via x402.",
-  }, async () => {
-    const res = await fetchWithTimeout(fetchFn, `${BASE_URL}/api/github/digests/latest`);
-    if (!res.ok) return errorResult(res);
-    const data = await res.json();
-    return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
-  });
-
   server.registerTool("get_github_history", {
     description:
       "Get historical daily GitHub digests — trending repo analysis over a configurable lookback window (1-30 days). Track how developer interest and project categories evolve over time. Returns an array of daily digest objects. Costs $0.05 USDC via x402.",

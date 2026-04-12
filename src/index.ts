@@ -48,11 +48,11 @@ function createServer() {
     registerTokens(server, fetchWithPayment);
     registerIntelligence(server, fetchWithPayment);
     registerPulse(server, fetchWithPayment);
-    log(`Server started with 23 tools (8 free + 15 paid via x402)`);
+    log(`Server started with 23 tools (11 free + 12 paid via x402)`);
   } else {
     log(
-      "WARNING: EVM_PRIVATE_KEY not set — running in free-tier mode (4 tools).\n" +
-        "To unlock all 16 tools with x402 micropayments, add your wallet private key:\n\n" +
+      "WARNING: EVM_PRIVATE_KEY not set — running in free-tier mode (11 tools).\n" +
+        "To unlock all 23 tools with x402 micropayments, add your wallet private key:\n\n" +
         JSON.stringify(
           {
             mcpServers: {
@@ -68,7 +68,7 @@ function createServer() {
         ) +
         "\n\nAlternatively, get a free API key at https://moltalyzer.xyz for 5 digests/day.",
     );
-    log("Server started with 8 free tools");
+    log("Server started with 11 free tools");
   }
 
   return server;
