@@ -23,7 +23,7 @@ let pkg: { version: string };
 try {
   pkg = JSON.parse(readFileSync(join(__dirname_resolved, "..", "package.json"), "utf-8"));
 } catch {
-  pkg = { version: "1.3.0" };
+  pkg = { version: "1.4.0" };
 }
 
 // All logging to stderr (stdout reserved for MCP protocol)
